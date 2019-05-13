@@ -31,7 +31,8 @@ export class MapContainer extends Component {
     initialCenter:{
       lat: 34.091158,
       lng: -118.2795188
-     }
+     },
+     directions:[]
   };
 
   onMarkerClick = (props, marker, e) =>{
@@ -97,24 +98,25 @@ export class MapContainer extends Component {
         }
       ]
 });
+const google = window.google
+ debugger;
+  const directionsService =  new google.maps.DirectionsService();
 
-
-  const directionsService = this.props.google.maps.DirectionsService();
-
-  const origin = { lat: 40.756795, lng: -73.954298 };
+  const origin = { lat: 34.091158, lng: -118.2795188 };
   const destination = { lat: 41.756795, lng: -78.954298 };
 
   directionsService.route(
     {
       origin: origin,
       destination: destination,
-      travelMode: this.props.google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.DRIVING
     },
     (result, status) => {
-      if (status === this.props.google.maps.DirectionsStatus.OK) {
+      if (status ===  google.maps.DirectionsStatus.OK) {
         this.setState({
           directions: result
         });
+        console.log(` directions ${result}`);
       } else {
         console.error(`error fetching directions ${result}`);
       }
